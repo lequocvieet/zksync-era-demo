@@ -41,3 +41,20 @@ If you do not start the zkSync local environment, the tests will fail with error
 - [GitHub](https://github.com/matter-labs)
 - [Twitter](https://twitter.com/zksync)
 - [Discord](https://discord.gg/nMaPGrDDwk)
+
+
+
+
+
+
+
+##Idea talk
+Furthermore, on zkSync, each L2 block will progress through the following four stages until it is final.
+
+- Pending: The transaction was received by the operator, but it has not been processed yet.
+
+- Processed: The transaction is processed by the operator and is confirmed to be included in the next block.
+
+- Committed: This indicates that the transaction data of this block has been posted on Ethereum. It does not prove that it has been executed in a valid way, but it ensures the availability of the block data.
+
+- Finalized: This indicates that the SNARK validity proof for the transaction has been submitted and verified by the smart contract. After this step, the transaction is considered to be final.
