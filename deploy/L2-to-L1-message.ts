@@ -1,12 +1,15 @@
 // The following script sends a message from L2 to L1, retrieves the message proof, and validates that the message received in L1 came from an L2 block.
 import * as ethers from "ethers";
 import { Provider, utils, Wallet } from "zksync-web3";
+import * as ContractArtifact from "../artifacts-zk/@matterlabs/zksync-contracts/l2/system-contracts/interfaces/IL1Messenger.sol/IL1Messenger.json";
+
 const TEST_PRIVATE_KEY = "0a6bbab2d0fb0d7b049ae0d8de395f4cfe9c3783ad302c56f21676fcc34f4fbe";
 
 const MESSAGE = "Some L2->L1 message";
 
 const l2Provider = new Provider("https://testnet.era.zksync.dev");
 const l1Provider = ethers.getDefaultProvider("goerli");
+//artifacts-zk/@matterlabs/zksync-contracts/l2/system-contracts/interfaces/IL1Messenger.sol/IL1Messenger.json
 
 
 const wallet = new Wallet(TEST_PRIVATE_KEY, l2Provider, l1Provider);
@@ -15,7 +18,8 @@ async function sendMessageToL1(text: string) {
   console.log(`Sending message to L1 with text ${text}`);
   const textBytes = ethers.utils.toUtf8Bytes(MESSAGE);
 
-  const messengerContract = new ethers.Contract(utils.L1_MESSENGER_ADDRESS, utils.L1_MESSENGER, wallet);
+  const messengerContract = new ethers.Contract(utils.L1_MESSENGER_ADDRESS,  ContractArtifact.abi, wallet);
+  console.log("messengerContract",messengerContract);
   const tx = await messengerContract.sendToL1(textBytes);
   await tx.wait();
   console.log("L2 trx hash is ", tx.hash);
